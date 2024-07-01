@@ -3,6 +3,7 @@
 from flask import Flask, redirect
 from flask.templating import render_template
 from flask_debugtoolbar import DebugToolbarExtension
+from forms import AddPetForm
 from models import Pet, connect_db, db
 
 # ==================================================
@@ -44,8 +45,15 @@ def create_app(db_name, testing=False):
 
         return render_template("home.html", pets=pets)
 
-    return app
+    @app.route("/pets/add", methods=["GET"])
+    def add_pet():
+        """Displays the form to add a pet, and adds a pet."""
 
+        form = AddPetForm()
+        
+        return render_template("add_pet.html", form=form)
+
+    return app
 
 # ==================================================
 
