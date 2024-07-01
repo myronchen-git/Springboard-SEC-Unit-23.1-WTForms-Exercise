@@ -1,7 +1,6 @@
 """Adoption Agency"""
 
-from flask import Flask, redirect
-from flask.templating import render_template
+from flask import Flask, flash, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from forms import AddPetForm
 from models import Pet, connect_db, db
@@ -45,13 +44,29 @@ def create_app(db_name, testing=False):
 
         return render_template("home.html", pets=pets)
 
-    @app.route("/pets/add", methods=["GET"])
+    @app.route("/pets/add", methods=["GET", "POST"])
     def add_pet():
         """Displays the form to add a pet, and adds a pet."""
 
         form = AddPetForm()
-        
-        return render_template("add_pet.html", form=form)
+
+        if form.validate_on_submit():
+            pet = Pet(
+                name=form.name.data,
+                species=form.species.data,
+                photo_url=form.photo_url.data,
+                age=form.age.data,
+                notes=form.notes.data
+            )
+
+            db.session.add(pet)
+            db.session.commit()
+
+            flash("Successfully added pet.", "info")
+            
+            return redirect("/pets")
+        else:
+            return render_template("add_pet.html", form=form)
 
     return app
 
