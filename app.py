@@ -1,10 +1,12 @@
 """Adoption Agency"""
 
-from flask import Flask
+from flask import Flask, redirect
+from flask.templating import render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db
+from models import Pet, connect_db, db
 
 # ==================================================
+
 
 def create_app(db_name, testing=False):
     app = Flask(__name__)
@@ -27,7 +29,23 @@ def create_app(db_name, testing=False):
 
     # --------------------------------------------------
 
+    @app.route("/")
+    def root():
+        """Root page.  Redirects to /pets."""
+
+        return redirect("/pets")
+
+    @app.route("/pets")
+    def homepage():
+        """Lists pets."""
+
+        pets = db.session.query(Pet.id, Pet.name, Pet.photo_url,
+                                Pet.available).all()
+
+        return render_template("home.html", pets=pets)
+
     return app
+
 
 # ==================================================
 
