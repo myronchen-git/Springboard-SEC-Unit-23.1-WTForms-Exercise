@@ -4,18 +4,5 @@
 
 {% block content %}
 <h1>Add a pet</h1>
-<form method="POST">
-  {{ form.hidden_tag() }}
-  {% for field in form if field.widget.input_type != "hidden" %}
-  <div>
-    {{ field.label }}
-    {{ field }}
-
-    {% for error in field.errors %}
-      {{ error }}
-    {% endfor %}
-  </div>
-  {% endfor %}
-  <button>Submit</button>
-</form>
+{% include 'partials/basic_form.html' %}
 {% endblock %}
