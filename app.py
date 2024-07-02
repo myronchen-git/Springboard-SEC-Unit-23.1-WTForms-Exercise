@@ -51,13 +51,8 @@ def create_app(db_name, testing=False):
         form = AddPetForm()
 
         if form.validate_on_submit():
-            pet = Pet(
-                name=form.name.data,
-                species=form.species.data,
-                photo_url=form.photo_url.data,
-                age=form.age.data,
-                notes=form.notes.data
-            )
+            form_data = {k:v for k,v in form.data.items() if k != "csrf_token"}
+            pet = Pet(**form_data)
 
             db.session.add(pet)
             db.session.commit()
