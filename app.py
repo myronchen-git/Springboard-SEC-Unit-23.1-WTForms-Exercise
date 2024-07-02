@@ -30,13 +30,13 @@ def create_app(db_name, testing=False):
     # --------------------------------------------------
 
     @app.route("/")
-    def root():
+    def show_root():
         """Root page.  Redirects to /pets."""
 
         return redirect("/pets")
 
     @app.route("/pets")
-    def homepage():
+    def show_home():
         """Lists pets."""
 
         pets = db.session.query(Pet.id, Pet.name, Pet.photo_url,
@@ -69,7 +69,7 @@ def create_app(db_name, testing=False):
             return render_template("add_pet.html", form=form)
 
     @app.route("/pets/<int:pet_id>", methods=["GET", "POST"])
-    def pet_info(pet_id):
+    def show_and_edit_pet_info(pet_id):
         """Displays info about a pet."""
 
         pet = db.session.query(Pet).get_or_404(pet_id)
