@@ -6,7 +6,7 @@
 <h1>Pets</h1>
 <ul>
   {% for pet in pets %}
-  {% # pet = (id, name, photo_url, available) %}
+  {# pet = (id, name, photo_url, available) #}
   <li>
     <a href="/pets/{{ pet[0] }}"">
       <h2>{{ pet[1] }}</h2>
