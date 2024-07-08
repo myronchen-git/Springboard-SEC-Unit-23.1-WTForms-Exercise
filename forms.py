@@ -4,6 +4,7 @@ from wtforms.validators import URL, AnyOf, InputRequired, NumberRange, Optional
 
 # ==================================================
 
+
 class AddPetForm(FlaskForm):
     """Form to add a pet."""
 
@@ -27,11 +28,13 @@ class AddPetForm(FlaskForm):
     age = IntegerField(
         "Age",
         validators=[
-            NumberRange(min=0, max=30, message="Age must be between 0 and 30."),
+            NumberRange(min=0, max=30,
+                        message="Age must be between 0 and 30."),
             Optional()
         ]
     )
     notes = StringField("Notes", validators=[Optional()])
+
 
 class EditPetForm(FlaskForm):
     """Form to edit a pet."""

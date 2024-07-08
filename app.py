@@ -2,6 +2,7 @@
 
 from flask import Flask, flash, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
+
 from forms import AddPetForm, EditPetForm
 from models import Pet, connect_db, db
 
@@ -51,14 +52,15 @@ def create_app(db_name, testing=False):
         form = AddPetForm()
 
         if form.validate_on_submit():
-            form_data = {k:v for k,v in form.data.items() if k != "csrf_token"}
+            form_data = {k: v for k, v in form.data.items()
+                         if k != "csrf_token"}
             pet = Pet(**form_data)
 
             db.session.add(pet)
             db.session.commit()
 
             flash("Successfully added pet.", "info")
-            
+
             return redirect("/pets")
         else:
             return render_template("add_pet.html", form=form)
@@ -75,9 +77,9 @@ def create_app(db_name, testing=False):
             pet.notes = form.notes.data
             pet.available = form.available.data
             db.session.commit()
-            
+
             flash("Edit successful", "info")
-            
+
             return redirect(f"/pets/{pet_id}")
         else:
             return render_template("pet_info.html", pet=pet)
@@ -85,6 +87,7 @@ def create_app(db_name, testing=False):
     return app
 
 # ==================================================
+
 
 if __name__ == "__main__":
     app = create_app("adopt")
