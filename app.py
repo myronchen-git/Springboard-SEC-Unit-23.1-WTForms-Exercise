@@ -12,7 +12,8 @@ from models import Pet, connect_db, db
 def create_app(db_name, testing=False):
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///{db_name}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://postgres@localhost/{
+        db_name}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     app.config["SECRET_KEY"] = "secret"
