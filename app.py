@@ -82,7 +82,7 @@ def create_app(db_name, testing=False):
 
             return redirect(f"/pets/{pet_id}")
         else:
-            return render_template("pet_info.html", pet=pet)
+            return render_template("pet_info.html", pet=pet, form=form)
 
     return app
 
